@@ -15,6 +15,8 @@ public class BaseVectorShape {
     public double getY() {return y;}
     public double getVelX() {return velX;}
     public double getVelY() {return velY;}
+    public double getMoveAngle(){return moveAngle;}
+    public double getFaceAngle(){return faceAngle;}
 
     
 

@@ -148,6 +148,26 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
         
     }
 
+    private void updateShip() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateShip'");
+    }
+
+    private void checkCollisions() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'checkCollisions'");
+    }
+
+    private void updateAsteroids() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateAsteroids'");
+    }
+
+    private void updateBullets() {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'updateBullets'");
+    }
+
     public void stop(){
         gameLoop = null; 
     }

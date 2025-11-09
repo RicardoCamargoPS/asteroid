@@ -140,16 +140,35 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
             
         }
     }
+   
+    public void stop(){
+        gameLoop = null; 
+    }
+
     private void gameUpdate() {
         updateShip();
         updateBullets();
         updateAsteroids();
-        checkCollisions();
+        checkCollisions();       
         
     }
+    public void updateShip(){
+        ship.incX(ship.getVelX());
 
-    public void stop(){
-        gameLoop = null; 
+        if(ship.getX() < -10) 
+            ship.setX(getSize().width + 10);
+        else if (getX(). > getSize().width + 10)
+            ship.setx(-10);
+
+    }
+    public void updateBullets(){
+        
+    }
+    public void updateAsteroids(){
+        
+    }
+    public void checkCollisions(){
+        
     }
 
     @Override

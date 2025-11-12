@@ -1,0 +1,53 @@
+# ----------------------------------------------------------------------
+# Regras de Ignorância Padrão para Java
+# ----------------------------------------------------------------------
+
+# Arquivos de compilação e binários
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar
+*.gz
+
+# Diretórios de compilação e saída
+bin/
+target/
+out/
+build/
+dist/
+
+# Logs e Dados Temporários
+*.log
+tmp/
+temp/
+
+# ----------------------------------------------------------------------
+# Configurações de IDEs Comuns
+# ----------------------------------------------------------------------
+
+# IntelliJ / Android Studio
+.idea/
+*.iws
+*.iml
+*.ipr
+
+# Eclipse
+.classpath
+.project
+.settings/
+
+# NetBeans
+nbproject/
+
+# ----------------------------------------------------------------------
+# Configurações Específicas do Visual Studio Code (VS Code)
+# ----------------------------------------------------------------------
+
+# Pasta de metadados do VS Code (manter apenas se não houver configurações importantes para o grupo)
+.vscode/
+
+# Arquivos de usuário
+.DS_Store # Mac
+Thumbs.db # Windows

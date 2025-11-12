@@ -2,6 +2,7 @@ import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.awt.RenderingHints.Key;
 import java.awt.event.*;
 import java.awt.geom.AffineTransform;
 import java.awt.image.BufferedImage;
@@ -18,7 +19,7 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
 
     int BULLETS = 10;
     Bullet[] bullet = new Bullet[BULLETS];
-    int currentBukke = 0;
+    int currentBullet = 0;
 
     Ship ship = new Ship();
 
@@ -160,28 +161,163 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
         else if (getX() > getSize().width + 10)
             ship.setX(-10);
 
+        ship.incY(ship.getVelY());
+        if(ship.getY() < -10) 
+            ship.setY(getSize().height + 10);
+        else if (getY() > getSize().height + 10)
+            ship.setY(-10);
+
     }
     public void updateBullets(){
+        for(int n = 0; n < BULLETS; n++){
+            if(bullet[n].isAlive()){
+                bullet[n].incX(bullet[n].getVelX());
+                if(bullet[n].getX() < 0 || bullet[n].getX() > getSize().width){
+                    bullet[n].setAlive(false);
+                }
+
+                bullet[n].incY(bullet[n].getVelY());
+                if(bullet[n].getY() < 0 || bullet[n].getY() > getSize().height){
+                    bullet[n].setAlive(false);
+                }
+            }
+        }
         
     }
 
     public void updateAsteroids(){
+        for(int n = 0; n < ASTEROIDS; n++){
+            if(ast[n].isAlive()){
+                ast[n].incX(ast[n].getVelX());
+                if(ast[n].getX() < -20) 
+                    ast[n].setX(getSize().width + 20);
+                else if (ast[n].getX() > getSize().width + 20)
+                    ast[n].setX(-20);
+
+                ast[n].incY(ast[n].getVelY());
+                if(ast[n].getY() < -20) 
+                    ast[n].setY(getSize().height + 20);
+                else if (ast[n].getY() > getSize().height + 20)
+                    ast[n].setY(-20);
+
+                ast[n].incMoveAngle(ast[n].getRotationVelocity());
+
+                if(ast[n].getMoveAngle() < 0){
+                    ast[n].setMoveAngle(360  - ast[n].getRotationVelocity());
+                } else if (ast[n].getMoveAngle() > 360){
+                    ast[n].setMoveAngle(ast[n].getRotationVelocity());                    
+                }
+            }
+        }
         
     }
     public void checkCollisions(){
+
+        for(int a = 0; a < ASTEROIDS; a++){
+            if(ast[a].isAlive()){
+                for(int b = 0; b < BULLETS; b++){
+                    if(bullet[b].isAlive()){
+                        if(ast[a].getBounds().contains(bullet[b].getBounds())){
+                            ast[a].setAlive(false);
+                            bullet[b].setAlive(false);
+                            continue;
+                        }
+                    }
+                }
+
+                if(ast[a].getBounds().intersects(ship.getBounds())){
+                    ast[a].setAlive(false);
+                    ship.setX(320);
+                    ship.setY(240);
+                    ship.setFaceAngle(0);
+                    ship.setVelX(0);
+                    ship.setVelY(0);
+                    continue;
+                }
+            }
+        }
         
     }
 
     @Override
     public void keyTyped(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyTyped'");
+        
     }
 
     @Override
     public void keyPressed(KeyEvent e) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'keyPressed'");
+        int key = e.getKeyCode();
+
+        switch (Key) {
+            
+            case KeyEvent.VK_LEFT:
+                ship.incFaceAngle(-5);
+                if(ship.getFaceAngle() < 0){
+                    ship.setFaceAngle(360 - 5);
+                    
+                }
+                break;
+            case KeyEvent.VK_RIGHT:
+                ship.incFaceAngle(5);
+                if(ship.getFaceAngle() > 360){
+                    ship.setFaceAngle(5);
+                    
+                }
+                break;
+            case KeyEvent.VK_UP:
+                ship.setMoveAngle(ship.getFaceAngle() - 90);
+                ship.incVelX(calcAngleMoveX(ship.getFaceAngle()) * 0.10);
+                ship.incVelY(calAngleMoveY(ship.getFaceAngle()) * 0.10);
+                break;
+            case KeyEvent.VK_CONTROL:
+            case KeyEvent.VK_ENTER:
+            case KeyEvent.VK_SPACE:
+                currentBullet++;
+                if(currentBullet > BULLETS - 1){
+                    currentBullet = 0;
+                }
+                bullet[currentBullet].setAlive(true);
+                bullet[currentBullet].setX(ship.getX());
+                bullet[currentBullet].setY(ship.getY());
+                bullet[currentBullet].setMoveAngle(ship.getFaceAngle() + 90);
+                double ang = bullet[currentBullet].getMoveAngle();
+                bullet[currentBullet].setVelX(calcAngleMoveX(ang) * 4);
+                bullet[currentBullet].setVelY(calAngleMoveY(ang) * 4);
+
+                currentBullet++;
+                
+                break;
+            
+
+        }
+
+        if(key == KeyEvent.VK_LEFT){
+            ship.incFaceAngle(-10);
+            if(ship.getFaceAngle() < 0){
+                ship.setFaceAngle(360);
+            }
+        } else if (key == KeyEvent.VK_RIGHT){
+            ship.incFaceAngle(10);
+            if(ship.getFaceAngle() > 360){
+                ship.setFaceAngle(0);
+            }
+        } else if (key == KeyEvent.VK_UP){
+            ship.incVelX(calcAngleMoveX(ship.getFaceAngle() + 90));
+            ship.incVelY(calAngleMoveY(ship.getFaceAngle() + 90));
+        } else if (key == KeyEvent.VK_SPACE){
+            bullet[currentBukke].setAlive(true);
+            bullet[currentBukke].setX(ship.getX());
+            bullet[currentBukke].setY(ship.getY());
+            bullet[currentBukke].setMoveAngle(ship.getFaceAngle() + 90);
+            double ang = bullet[currentBukke].getMoveAngle();
+            bullet[currentBukke].setVelX(calcAngleMoveX(ang) * 4);
+            bullet[currentBukke].setVelY(calAngleMoveY(ang) * 4);
+
+            currentBukke++;
+            if(currentBukke >= BULLETS){
+                currentBukke = 0;
+            }
+        }
     }
 
     @Override

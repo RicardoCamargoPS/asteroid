@@ -33,7 +33,7 @@ public class BaseVectorShape {
     public void incVelX(double i){this.velX += i;}
     public void incVelY(double i){this.velY += i;}
     public void incFaceAngle(double i){this.faceAngle += i;}
-    public void incmoveAngle(double i){this.moveAngle += i;}
+    public void incMoveAngle(double i){this.moveAngle += i;}
     
 
     BaseVectorShape(){

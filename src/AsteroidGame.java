@@ -157,8 +157,8 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
 
         if(ship.getX() < -10) 
             ship.setX(getSize().width + 10);
-        else if (getX(). > getSize().width + 10)
-            ship.setx(-10);
+        else if (getX() > getSize().width + 10)
+            ship.setX(-10);
 
     }
     public void updateBullets(){
@@ -170,10 +170,6 @@ public class AsteroidGame extends Applet  implements Runnable, KeyListener{
     }
     public void checkCollisions(){
         
-    }
-    private void checkCollisions() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'checkCollisions'");
     }
 
     @Override
